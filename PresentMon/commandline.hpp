@@ -24,6 +24,7 @@ SOFTWARE.
 
 #include <windows.h>
 #include <functional>
+#include <vector>
 
 enum class Verbosity {
     Simple,
@@ -58,6 +59,7 @@ struct CommandLineArgs {
     bool mTryToElevate = true;
     bool mMultiCsv = false;
     std::function<void(const std::string& processName, double timeInSeconds, double msBetweenPresents)> mPresentCallback;
+    std::vector<std::string> mBlackList;
 };
 
 bool ParseCommandLine(int argc, char** argv, CommandLineArgs* out);

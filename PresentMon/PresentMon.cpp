@@ -224,6 +224,18 @@ void AddPresent(PresentMonData& pm, PresentEvent& p, uint64_t now, uint64_t perf
         UpdateProcessInfo_Realtime(proc, now, p.ProcessId);
     }
 
+    if (proc.mModuleName.empty()) {
+      // ignore system processes without names
+      return;
+    }
+
+    for (auto& entry : pm.mArgs->mBlackList) {
+      if (_stricmp(entry.c_str(), proc.mModuleName.c_str()) == 0) {
+        // process is on blacklist
+        return;
+      }
+    }
+
     if (pm.mArgs->mTargetProcessName != nullptr && _stricmp(pm.mArgs->mTargetProcessName, proc.mModuleName.c_str()) != 0) {
         // process name does not match
         return;
