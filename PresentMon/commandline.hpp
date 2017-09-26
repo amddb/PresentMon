@@ -23,6 +23,7 @@ SOFTWARE.
 #pragma once
 
 #include <windows.h>
+#include <functional>
 
 enum class Verbosity {
     Simple,
@@ -56,6 +57,7 @@ struct CommandLineArgs {
     bool mHotkeySupport = false;
     bool mTryToElevate = true;
     bool mMultiCsv = false;
+    std::function<void(const std::string& processName, double timeInSeconds, double msBetweenPresents)> mPresentCallback;
 };
 
 bool ParseCommandLine(int argc, char** argv, CommandLineArgs* out);

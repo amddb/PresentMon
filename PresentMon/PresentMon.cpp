@@ -270,6 +270,12 @@ void AddPresent(PresentMonData& pm, PresentEvent& p, uint64_t now, uint64_t perf
             }
 
             double timeInSeconds = (double)(int64_t)(p.QpcTime - pm.mStartupQpcTime) / perfFreq;
+
+            if (pm.mArgs->mPresentCallback)
+            {
+                pm.mArgs->mPresentCallback(proc.mModuleName, timeInSeconds, timeTakenMilliseconds);
+            }
+
             fprintf(file, "%s,%d,0x%016llX,%s,%d,%d",
                     proc.mModuleName.c_str(), p.ProcessId, p.SwapChainAddress, RuntimeToString(p.Runtime), curr.SyncInterval, curr.PresentFlags);
             if (pm.mArgs->mVerbosity > Verbosity::Simple)
